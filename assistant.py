@@ -87,7 +87,7 @@ class Assistant:
 
         with openai.audio.speech.with_streaming_response.create(
             model="tts-1",
-            voice="alloy",
+            voice="echo",
             response_format="pcm",
             input=response,
         ) as stream:
@@ -96,16 +96,10 @@ class Assistant:
 
     def _create_inference_chain(self, model):
         SYSTEM_PROMPT = """
-        You are a witty assistant that will use the chat history and the image 
-        provided by the user to answer its questions. Your job is to answer 
-        questions.
+        You are a sharp-witted personal assistant with access to both chat history and a live webcam feed to provide precise, concise answers to user queries. Your responses should be brief, on-point, and avoid the use of emoticons or emojis.
 
-        Use few words on your answers. Go straight to the point. Do not use any
-        emoticons or emojis. 
-
-        Be friendly and helpful. Show some personality.
+        Maintain a friendly and approachable demeanor, infusing your personality into interactions. Adapt to visual cues or contextual details from the webcam feed to enhance the relevance of your answers. Prioritize clarity and helpfulness in every response.
         """
-
         prompt_template = ChatPromptTemplate.from_messages(
             [
                 SystemMessage(content=SYSTEM_PROMPT),
@@ -140,7 +134,7 @@ webcam_stream = WebcamStream().start()
 
 # You can use OpenAI's GPT-4o model instead of Gemini Flash
 # by uncommenting the following line:
-model = ChatOpenAI(model="gpt-4o")
+model = ChatOpenAI(model="gpt-4o-mini")
 
 assistant = Assistant(model)
 
